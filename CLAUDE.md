@@ -23,11 +23,13 @@ Sem build, sem dependências, vanilla. Quatro arquivos:
 |---|---|
 | `index.html` | Casca estática: header, faixa de stats, controles, âncoras de render, bloco PIX, footer |
 | `styles.css` | Tokens do design system Organic (verbatim do handoff) + camada da página |
-| `app.js` | Dados (`ITENS`, `JA_TEM`), estado, filtros, render |
+| `app.js` | Dados (`ITENS`, `JA_TEM`), estado, filtros, sincronização, render |
+| `reservas.gs` | Google Apps Script da reserva compartilhada. **Não é servido pelo Pages** — mora aqui só como fonte versionada; roda colado no editor do Apps Script |
 | `.nojekyll` | Precisa continuar no repositório |
 
-O topo do `app.js` tem o bloco de configuração rápida: `FONE`, `CHAVE_PIX`, `PIX_LABEL`, `PIX_DONO`.
-`FONE` vazio faz os botões de WhatsApp sumirem; `CHAVE_PIX` vazia esconde o cartão da chave.
+O topo do `app.js` tem o bloco de configuração rápida: `FONE`, `CHAVE_PIX`, `PIX_LABEL`, `PIX_DONO`,
+`RESERVAS_URL`. `FONE` vazio faz os botões de WhatsApp sumirem; `CHAVE_PIX` vazia esconde o cartão
+da chave; `RESERVAS_URL` vazia faz a reserva voltar a ser só local.
 
 Render: `renderEstaticos()` (stats, "já tenho", bloco PIX — roda uma vez) e `render()` (grupos,
 chips, banner de sugestão — roda a cada mudança de estado). A busca fica no HTML estático, **fora**
@@ -37,8 +39,12 @@ do que é re-renderizado, senão o input perde o foco a cada tecla.
 
 - **`preco: null` ⇒ item cai na faixa "A combinar"** e o card mostra só "A combinar", sem "aprox.".
   Itens sem preço fechado **não devem receber valor inventado**.
-- A faixa **"A combinar"** foi acrescentada às cinco do handoff porque hoje 30 dos 35 itens estão
-  sem preço no app de finanças. Quando os valores entrarem lá, ela esvazia sozinha.
+- **Precedência de preço:** valor real do app de finanças > estimativa do handoff > `null`.
+  Onde o usuário já escolheu um produto concreto (Fogão, Armário, Guarda-roupas, Cama, Potes), o
+  preço real do app manda, mesmo sendo bem menor que a estimativa. Não "arredonde" pra estimativa.
+- A faixa **"A combinar"** foi acrescentada às cinco do handoff. Hoje cobre 16 dos 35 itens —
+  aqueles que não estão no exemplo do handoff nem têm valor no app. Quando os preços entrarem no
+  app de finanças, ela esvazia sozinha.
 - Itens sem preço vão **para o fim** na ordenação por preço, nos dois sentidos.
 - **`JA_TEM`** (Tanquinho, TV, Jogo de copos, Ventilador) evita presente repetido. Essa seção
   **não** vinha no handoff — foi mantida da versão anterior, no vocabulário visual novo.
@@ -65,6 +71,12 @@ O item de lá é `{nome, cat, valor, parcela, qtd, link, ess, comprado}`. Mapeam
 `preco: null`; `comprado: true` ⇒ vai para `JA_TEM`; `cat` ⇒ `comodo` (`Maiores` ⇒ `Itens grandes`).
 `nota` e `busca` são escritos à mão, não vêm do app.
 
+Os preços dos outros 14 itens vieram das **estimativas do handoff** (autorizado pelo usuário em
+02/08/2026). Dois casos que não são cópia direta: `lencois` é R$ 450 porque o app funde num item só
+o que o handoff separava em "Jogo de lençóis" (200) e "Colcha / edredom" (250); e `potes` ficou em
+R$ 89,90, o valor real do app, não os R$ 90 do exemplo. Ao re-sincronizar, **não sobrescreva com
+`null`** os preços que hoje vêm do handoff só porque o app ainda tem `0` neles.
+
 ## Estilo
 
 Design system **Organic**, do handoff: creme `#f5ead8` / areia `#ebddc5`, acento terracota
@@ -79,12 +91,38 @@ camada da página, não os tokens.
 As fontes entram por `<link>` no `index.html` (com o peso 500 do Figtree, que os rótulos usam);
 o `@import` original do `styles.css` foi removido pra não fazer duas requisições em série.
 
-## Estado
+## Reserva compartilhada
 
-`localStorage["presentes-matheus-reservas-v1"]` guarda os ids reservados — **a reserva é local ao
-navegador de quem reservou**. Outro visitante não vê o item como escolhido; o dono descobre pelo
-WhatsApp. Tornar isso compartilhado (Apps Script / Supabase) é a maior melhoria pendente, descrita
-no README do handoff. Ids que não existem mais em `ITENS` são descartados na leitura.
+Dois conjuntos de ids, e a distinção entre eles é o que impede um visitante de desmarcar a escolha
+de outro:
+
+- **`state.reservas`** — tudo que está tomado, seu ou dos outros. Vem do servidor.
+- **`state.minhas`** — só o que **este** navegador reservou. Persistido em
+  `localStorage["presentes-matheus-reservas-v1"]`.
+
+Três estados de card: livre (`Eu dou esse`) · sua (`Sua escolha` + `Desmarcar`) · de terceiro
+(`Escolhido` + `Já é de alguém`, sem ação).
+
+O backend é o `reservas.gs` — Apps Script publicado como Web App, gravando numa planilha
+(`item_id | nome | timestamp`), com `LockService` serializando os POSTs. Instruções de publicação
+no cabeçalho do próprio arquivo. Depois de publicar, cole a URL `/exec` em `RESERVAS_URL`.
+
+Detalhes que não são óbvios e quebram se mexidos sem cuidado:
+
+- O POST vai com `Content-Type: text/plain` **de propósito**: mantém a requisição "simples" e evita
+  o preflight `OPTIONS`, que o Apps Script não sabe responder. O corpo continua sendo JSON.
+- O Web App **tem** que ser publicado como "Qualquer pessoa". Quem visita a lista não tem conta
+  Google no contexto da página; qualquer outra opção devolve 401.
+- A reserva é **otimista com rollback**: a tela marca na hora e desfaz se o POST falhar, senão a
+  pessoa sai achando que reservou.
+- Corrida (dois reservando o mesmo item): o servidor responde `{ok:false, erro:'ocupado'}` e a
+  página desmarca só a sua, avisando quem chegou depois.
+- Sincroniza no load, ao voltar o foco pra aba, e a cada 45s com a aba visível.
+- Ids que não existem mais em `ITENS` são descartados na leitura, senão a contagem mente.
+- Sem `RESERVAS_URL`, nada disso roda e a página funciona como antes, local.
+
+O Web App é anônimo: quem descobrir a URL pode reservar e desmarcar. Para uma lista de presentes
+isso é aceitável — o pior caso é alguém zerar as reservas, e a planilha guarda o histórico.
 
 ## Cuidados
 
