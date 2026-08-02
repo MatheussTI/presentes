@@ -3,289 +3,99 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#15274a">
+<meta name="theme-color" content="#f5ead8">
 <title>Casa nova + aniversário do Matheus</title>
-<meta property="og:title" content="Casa nova + aniversário do Matheus">
-<meta property="og:description" content="Tô em processo de mudança e faço aniversário dia 04/08. Se quiser me gratificar, dá uma olhada na lista!">
+<meta name="description" content="Lista de presentes de casa nova e aniversário do Matheus. Escolhe um item, marca que é teu, ou manda um PIX.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
-<style>
-  *{box-sizing:border-box;}
-  html,body{margin:0;padding:0;}
-  body{font-family:Manrope,system-ui,sans-serif;color:#1e2022;background:#faf9f8;-webkit-font-smoothing:antialiased;}
-  a{color:#25399e;text-decoration:none;}
-  .ms{font-family:'Material Symbols Rounded';font-weight:normal;line-height:1;display:inline-block;vertical-align:middle;}
-  .wrap{max-width:1080px;margin:0 auto;padding:0 20px 80px;}
-
-  /* HERO */
-  .hero{background:linear-gradient(140deg,#15274a 0%,#25399e 62%,#3d54c9 100%);color:#fff;padding:56px 20px 64px;position:relative;overflow:hidden;}
-  .hero:after{content:"";position:absolute;width:520px;height:520px;border-radius:50%;background:rgba(229,58,46,.22);right:-160px;top:-220px;}
-  .hero-in{max-width:1080px;margin:0 auto;position:relative;z-index:2;}
-  .badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);padding:7px 15px;border-radius:9999px;font-size:13px;font-weight:700;}
-  h1{font-family:Unbounded;font-weight:600;font-size:clamp(30px,5.2vw,52px);line-height:1.08;margin:20px 0 0;letter-spacing:-.5px;}
-  .lead{font-size:clamp(15px,2vw,18px);line-height:1.65;color:#d7e0ff;max-width:640px;margin:18px 0 0;}
-  .hero-cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px;}
-  .btn{border:none;cursor:pointer;border-radius:9999px;padding:13px 24px;font-family:Manrope;font-size:14px;font-weight:800;display:inline-flex;align-items:center;gap:8px;}
-  .btn-red{background:#e53a2e;color:#fff;}
-  .btn-ghost{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.3);}
-
-  /* FAIXA AVISO */
-  .note{background:#fff4d6;border:1px solid #f5d98b;color:#7a5a00;border-radius:14px;padding:16px 20px;font-size:15px;font-weight:600;display:flex;gap:12px;align-items:center;margin-top:-28px;position:relative;z-index:3;box-shadow:0 8px 24px rgba(2,14,37,.08);}
-
-  /* FILTROS */
-  .chips{display:flex;flex-wrap:wrap;gap:8px;margin:34px 0 20px;}
-  .chip{border:1px solid #d4deff;background:#fff;color:#25399e;border-radius:9999px;padding:9px 17px;font-family:Manrope;font-size:13px;font-weight:700;cursor:pointer;transition:.15s;}
-  .chip:hover{border-color:#80a2ff;}
-  .chip.on{background:#25399e;border-color:#25399e;color:#fff;}
-
-  /* TIERS */
-  .tier{margin-top:36px;}
-  .tier-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:6px;}
-  .tier-emoji{font-size:26px;}
-  .tier-name{font-family:Unbounded;font-weight:500;font-size:clamp(19px,2.6vw,24px);}
-  .tier-range{font-size:12px;font-weight:800;padding:5px 12px;border-radius:9999px;text-transform:uppercase;letter-spacing:.04em;}
-  .tier-sub{font-size:14px;color:#636466;margin:0 0 16px;}
-
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:14px;}
-  .card{background:#fff;border:1px solid #e6ebf5;border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:6px;transition:.16s;}
-  .card:hover{border-color:#80a2ff;transform:translateY(-2px);box-shadow:0 10px 26px rgba(2,14,37,.07);}
-  .card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
-  .card-name{font-weight:800;font-size:16px;}
-  .cat{font-size:10px;font-weight:800;padding:2px 9px;border-radius:9999px;text-transform:uppercase;letter-spacing:.03em;white-space:nowrap;}
-  .price{font-family:Unbounded;font-weight:500;font-size:21px;color:#15274a;margin-top:2px;}
-  .parc{font-size:12.5px;color:#8c8e90;}
-  .card-link{margin-top:auto;padding-top:12px;font-size:13px;font-weight:800;display:inline-flex;align-items:center;gap:5px;}
-
-  /* JÁ GARANTIDOS */
-  .done{margin-top:44px;background:#f2f7f1;border:1px solid #cfe8ca;border-radius:14px;padding:20px 22px;}
-  .done h3{margin:0 0 10px;font-size:15px;font-weight:800;color:#2c8319;display:flex;align-items:center;gap:8px;}
-  .done-items{display:flex;flex-wrap:wrap;gap:8px;}
-  .done-pill{background:#fff;border:1px solid #cfe8ca;color:#2c8319;border-radius:9999px;padding:6px 14px;font-size:13px;font-weight:700;text-decoration:line-through;}
-
-  /* PIX */
-  .pix{margin-top:34px;background:#15274a;color:#fff;border-radius:18px;padding:30px 26px;text-align:center;}
-  .pix h3{font-family:Unbounded;font-weight:500;font-size:22px;margin:0 0 8px;}
-  .pix p{color:#a4bfff;font-size:14.5px;line-height:1.6;margin:0 auto 20px;max-width:520px;}
-  .pixkey{display:inline-flex;align-items:center;gap:12px;background:rgba(255,255,255,.1);border:1px dashed rgba(255,255,255,.35);border-radius:12px;padding:14px 20px;font-size:16px;font-weight:700;letter-spacing:.3px;}
-
-  footer{text-align:center;margin-top:52px;color:#8c8e90;font-size:13.5px;line-height:1.7;}
-  .heart{color:#e53a2e;}
-  @media(max-width:640px){
-    .hero{padding:40px 18px 56px;}
-    .grid{grid-template-columns:1fr;}
-    .note{font-size:14px;}
-  }
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Caprasimo&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<header class="hero">
-  <div class="hero-in">
-    <span class="badge"><span class="ms" style="font-size:17px">cake</span> 04 de agosto · aniversário</span>
-    <h1>Casa nova, vida nova<br>(e um aniversário no meio)</h1>
-    <p class="lead">
-      Fala, pessoal! Tô em <strong style="color:#fff;">processo de mudança</strong> — montando tudo do zero, item por item.
-      E, coincidência boa, faço <strong style="color:#fff;">aniversário no dia 04 de agosto</strong>.
-      Se você quiser me gratificar nesse momento, montei essa listinha pra ajudar na escolha.
-      Escolhe o que couber no teu bolso e no teu coração. 🏠
-    </p>
-    <div class="hero-cta">
-      <button class="btn btn-red" onclick="document.getElementById('lista').scrollIntoView({behavior:'smooth'})"><span class="ms" style="font-size:19px">redeem</span> Ver a lista</button>
-      <button class="btn btn-ghost" onclick="document.getElementById('pix').scrollIntoView({behavior:'smooth'})"><span class="ms" style="font-size:19px">favorite</span> Contribuir de outro jeito</button>
+<div class="wrap">
+
+  <header class="header">
+    <div class="badge-data">
+      <span class="badge-dot"></span>
+      04 de agosto · aniversário + casa nova
+    </div>
+    <h1>Tô montando uma casa do zero.</h1>
+    <p class="intro">Mudei de casa e faço aniversário no dia <strong>04/08</strong> — o universo claramente quis que essas duas contas caíssem no mesmo mês. Se der vontade de me presentear, escolhe algo aqui embaixo. <strong>Não tem item pequeno demais.</strong> Um pano de prato salva um jantar tanto quanto uma geladeira.</p>
+    <div class="ctas">
+      <a href="#lista" class="pill pill-lg pill-primary">Ver a lista</a>
+      <a href="#pix" class="pill pill-lg pill-secondary">Prefiro mandar PIX</a>
+    </div>
+  </header>
+
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-num" id="stat-total">—</div>
+      <div class="stat-label">itens na lista</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num sage" id="stat-reservados">0</div>
+      <div class="stat-label">já escolhidos por alguém</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" id="stat-menor">—</div>
+      <div class="stat-label">o item mais baratinho</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" id="stat-comodos">—</div>
+      <div class="stat-label">cômodos pra equipar do zero</div>
     </div>
   </div>
-</header>
 
-<div class="wrap">
-  <div class="note">
-    <span class="ms" style="font-size:26px">emoji_events</span>
-    <span><strong>Todo presente é bem-vindo!</strong> Não tem item pequeno demais nem valor mínimo — o que vale é a intenção. Sério mesmo. 💛</span>
-  </div>
+  <section class="lista" id="lista">
 
-  <div id="lista"></div>
-  <div class="chips" id="chips"></div>
-  <div id="tiers"></div>
+    <div class="lista-head">
+      <h2>A lista</h2>
+      <button type="button" class="btn-surpreenda" id="surpreenda">Me surpreenda →</button>
+    </div>
 
-  <div class="done">
-    <h3><span class="ms" style="font-size:19px">check_circle</span> Já conquistados (obrigado!)</h3>
-    <div class="done-items" id="done"></div>
-  </div>
+    <div class="controles">
+      <div class="controles-linha">
+        <input type="search" class="campo" id="busca" placeholder="Buscar item…" aria-label="Buscar item">
+        <select class="campo" id="ordem" aria-label="Ordenar a lista">
+          <option value="comodo">Agrupar por cômodo</option>
+          <option value="barato">Do mais barato</option>
+          <option value="caro">Do mais caro</option>
+        </select>
+        <button type="button" class="campo toggle" id="esconder" aria-pressed="false">
+          <span class="switch" aria-hidden="true"></span>
+          Esconder já escolhidos
+        </button>
+      </div>
+      <div class="faixas" id="faixas" role="group" aria-label="Filtrar por faixa de preço"></div>
+    </div>
 
-  <section class="pix" id="pix">
-    <h3>Prefere contribuir em dinheiro?</h3>
-    <p>Se você não quiser escolher um item específico, qualquer valor via PIX ajuda demais — junto com outras contribuições vira aquele item maior da lista.</p>
-    <div id="pixbox"></div>
+    <div id="sugestao"></div>
+    <div id="grupos"></div>
+
   </section>
 
-  <footer>
-    Feito com <span class="heart">♥</span> pra facilitar a vida de quem quis ajudar.<br>
-    Obrigado por fazer parte dessa fase! — <strong>Matheus</strong>
+  <section class="jatem" id="jatem-box">
+    <span class="jatem-kicker">Já tenho em casa</span>
+    <div class="jatem-pills" id="jatem" style="display:flex;flex-wrap:wrap;gap:8px;"></div>
+    <span class="jatem-nota">Esses aqui já estão resolvidos 😄</span>
+  </section>
+
+  <section class="pix" id="pix">
+    <div class="pix-txt">
+      <h2>Ou manda um PIX e finge que escolheu com muito carinho</h2>
+      <p>Qualquer valor ajuda — sério, qualquer um. Vários PIX pequenos viram a geladeira. E se quiser dividir um item mais caro com alguém, é só combinar comigo no WhatsApp.</p>
+    </div>
+    <div class="pix-linha" id="pix-linha"></div>
+  </section>
+
+  <footer class="rodape">
+    <span>Feito pra facilitar a vida de quem quis ajudar. Obrigado, de verdade. — <strong>Matheus</strong></span>
+    <span>Os valores são estimativas. Compra onde for mais barato.</span>
   </footer>
+
 </div>
 
-<script>
-/* ===================================================================
-   CONFIGURAÇÃO RÁPIDA — edite só estas duas linhas quando quiser
-   =================================================================== */
-const PIX = '';        // ex.: 'matheus@email.com' ou a chave que preferir. Vazio = seção some.
-const WHATSAPP = '';   // ex.: '5527999999999' (só números, com DDI 55). Vazio = botão some.
-
-/* ===================================================================
-   ITENS — categorias: Cozinha, Quarto e Sala, Área de Serviço, Banheiro, Maiores
-   valor: número (R$) ou null quando ainda não definido
-   parcela/qtd: opcional, só pra mostrar "R$ x × n"
-   =================================================================== */
-const ITENS = [
-  /* ---------- Cozinha ---------- */
-  {nome:'Air Fryer',                cat:'Cozinha',         valor:null,    parcela:null,   qtd:1,  link:''},
-  {nome:'Jogo de Panelas',          cat:'Cozinha',         valor:null,    parcela:null,   qtd:1,  link:''},
-  {nome:'Jogo de Pratos',           cat:'Cozinha',         valor:null,    parcela:null,   qtd:1,  link:''},
-  {nome:'Jogo de Talheres',         cat:'Cozinha',         valor:null,    parcela:null,   qtd:1,  link:''},
-  {nome:'Potes herméticos',         cat:'Cozinha',         valor:89.90,   parcela:null,   qtd:1,  link:''},
-  {nome:'Tábua de Carne',           cat:'Cozinha',         valor:null,    parcela:null,   qtd:1,  link:''},
-  {nome:'Peneira',                  cat:'Cozinha',         valor:null,    parcela:null,   qtd:1,  link:''},
-  {nome:'Jarras',                   cat:'Cozinha',         valor:null,    parcela:null,   qtd:1,  link:''},
-  {nome:'Pano de Prato',            cat:'Cozinha',         valor:null,    parcela:null,   qtd:1,  link:''},
-  {nome:'Lixeira',                  cat:'Cozinha',         valor:null,    parcela:null,   qtd:1,  link:''},
-  {nome:'Tapete',                   cat:'Cozinha',         valor:null,    parcela:null,   qtd:1,  link:''},
-  {nome:'Itens de Cozinha',         cat:'Cozinha',         valor:null,    parcela:null,   qtd:1,  link:''},
-
-  /* ---------- Quarto e Sala ---------- */
-  {nome:'Cortina',                  cat:'Quarto e Sala',   valor:null,    parcela:null,   qtd:1,  link:''},
-  {nome:'Lençóis e Colchas de Cama',cat:'Quarto e Sala',   valor:null,    parcela:null,   qtd:1,  link:''},
-  {nome:'Fronha',                   cat:'Quarto e Sala',   valor:null,    parcela:null,   qtd:1,  link:''},
-  {nome:'Travesseiro',              cat:'Quarto e Sala',   valor:null,    parcela:null,   qtd:1,  link:''},
-  {nome:'Cabide',                   cat:'Quarto e Sala',   valor:null,    parcela:null,   qtd:1,  link:''},
-  {nome:'Rack',                     cat:'Quarto e Sala',   valor:null,    parcela:null,   qtd:1,  link:'https://shopee.com.br'},
-  {nome:'Sofá',                     cat:'Quarto e Sala',   valor:null,    parcela:null,   qtd:1,  link:'https://www.madeiramadeira.com.br'},
-
-  /* ---------- Área de Serviço ---------- */
-  {nome:'Vassoura e Pá de Lixo',    cat:'Área de Serviço', valor:null,    parcela:null,   qtd:1,  link:''},
-  {nome:'Rodo',                     cat:'Área de Serviço', valor:null,    parcela:null,   qtd:1,  link:''},
-  {nome:'Pano de Chão',             cat:'Área de Serviço', valor:null,    parcela:null,   qtd:1,  link:''},
-  {nome:'Ferro de Passar Roupas',   cat:'Área de Serviço', valor:null,    parcela:null,   qtd:1,  link:''},
-  {nome:'Pregador de Roupas',       cat:'Área de Serviço', valor:null,    parcela:null,   qtd:1,  link:''},
-  {nome:'Centrífuga',               cat:'Área de Serviço', valor:null,    parcela:null,   qtd:1,  link:''},
-
-  /* ---------- Banheiro ---------- */
-  {nome:'Toalha de Banho e Rosto',  cat:'Banheiro',        valor:null,    parcela:null,   qtd:1,  link:''},
-  {nome:'Porta Sabonete',           cat:'Banheiro',        valor:null,    parcela:null,   qtd:1,  link:''},
-  {nome:'Porta Escova e Pasta',     cat:'Banheiro',        valor:null,    parcela:null,   qtd:1,  link:''},
-  {nome:'Lixeira',                  cat:'Banheiro',        valor:null,    parcela:null,   qtd:1,  link:''},
-  {nome:'Tapete',                   cat:'Banheiro',        valor:null,    parcela:null,   qtd:1,  link:''},
-
-  /* ---------- Maiores ---------- */
-  {nome:'Geladeira',                cat:'Maiores',         valor:null,    parcela:null,   qtd:1,  link:'https://www.amazon.com.br'},
-  {nome:'Fogão',                    cat:'Maiores',         valor:748.44,  parcela:62.37,  qtd:12, link:'https://a.co/d/0478tlLY'},
-  {nome:'Armário de Cozinha',       cat:'Maiores',         valor:966.80,  parcela:96.68,  qtd:10, link:'https://www.mercadolivre.com.br/armario-para-cozinha-12-portas-1-gaveta-clarice-gb/p/MLB62724058'},
-  {nome:'Guarda-Roupas',            cat:'Maiores',         valor:1103.90, parcela:110.39, qtd:10, link:'https://www.casasbahia.com.br/guarda-roupa-casal-6-portas-2-gavetas-franca-cinamomo-off-white/p/1565187788'},
-  {nome:'Cama de Casal',            cat:'Maiores',         valor:2112.60, parcela:176.05, qtd:12, link:'https://www.magazineluiza.com.br/cama-box-box-colchao-queen-umaflex-bipartida-de-molas-ensacadas-46cm-de-altura-beta/p/229987700/co/cxqq/'},
-];
-
-const JA_TEM = ['Tanquinho','TV','Jogo de Copos','Ventilador'];
-
-/* Faixas — do mais leve pro mais parrudo */
-const TIERS = [
-  {id:'t1', emoji:'🫶', nome:'O que vale é o carinho',  sub:'Coisinhas simples que fazem uma falta danada no dia a dia.',
-   range:'até R$ 150', bg:'#ecfdf5', fg:'#047857', min:0,    max:150},
-  {id:'t2', emoji:'👌', nome:'Presente redondo',        sub:'Aquele presente certeiro, sem pesar no bolso.',
-   range:'R$ 150 a R$ 500', bg:'#eef2ff', fg:'#3730a3', min:150, max:500},
-  {id:'t3', emoji:'🤝', nome:'Tá investindo no meu conforto', sub:'Aqui já é compromisso sério com a minha qualidade de vida.',
-   range:'R$ 500 a R$ 1.200', bg:'#fff0e6', fg:'#b45309', min:500, max:1200},
-  {id:'t4', emoji:'😎', nome:'Ai tu vai tirar onda',    sub:'Se aparecer alguém pra bancar isso aqui, vira padrinho da casa.',
-   range:'R$ 1.200+', bg:'#fce7f3', fg:'#9d174d', min:1200, max:Infinity},
-  {id:'t0', emoji:'🎁', nome:'Surpresa é sempre bom',   sub:'Sem preço fechado ainda — se quiser esse, a gente combina.',
-   range:'a combinar', bg:'#eff0f2', fg:'#636466', min:null, max:null},
-];
-
-const CAT_COLORS = {
-  'Cozinha':['#fff0e6','#b45309'], 'Quarto e Sala':['#eef2ff','#3730a3'],
-  'Área de Serviço':['#ecfdf5','#047857'], 'Banheiro':['#e0f2fe','#0369a1'], 'Maiores':['#fce7f3','#9d174d']
-};
-
-let filtro = 'Todas';
-
-const brl = n => 'R$ ' + Number(n||0).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
-const esc = s => String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-
-function tierOf(it){
-  if(it.valor==null) return 't0';
-  return (TIERS.find(t=>t.min!=null && it.valor>=t.min && it.valor<t.max) || TIERS[0]).id;
-}
-
-function renderChips(){
-  const cats = ['Todas', ...Array.from(new Set(ITENS.map(i=>i.cat)))];
-  document.getElementById('chips').innerHTML = cats.map(c=>
-    `<button class="chip ${filtro===c?'on':''}" onclick="setFiltro('${esc(c)}')">${esc(c)}</button>`).join('');
-}
-function setFiltro(c){ filtro=c; renderChips(); renderTiers(); }
-
-function renderTiers(){
-  const visiveis = ITENS.filter(i=> filtro==='Todas' || i.cat===filtro);
-  document.getElementById('tiers').innerHTML = TIERS.map(t=>{
-    const itens = visiveis.filter(i=>tierOf(i)===t.id);
-    if(!itens.length) return '';
-    return `<section class="tier">
-      <div class="tier-head">
-        <span class="tier-emoji">${t.emoji}</span>
-        <span class="tier-name">${t.nome}</span>
-        <span class="tier-range" style="background:${t.bg};color:${t.fg};">${t.range}</span>
-      </div>
-      <p class="tier-sub">${t.sub}</p>
-      <div class="grid">${itens.map(cardHTML).join('')}</div>
-    </section>`;
-  }).join('');
-}
-
-function cardHTML(i){
-  const cc = CAT_COLORS[i.cat] || ['#eff0f2','#636466'];
-  const preco = i.valor!=null ? brl(i.valor) : 'A combinar';
-  const parc  = (i.parcela && i.qtd>1) ? `ou ${brl(i.parcela)} × ${i.qtd}` : (i.valor!=null ? 'à vista' : 'me chama que a gente vê');
-  const link  = i.link ? `<a class="card-link" href="${esc(i.link)}" target="_blank" rel="noopener">ver sugestão <span class="ms" style="font-size:15px">open_in_new</span></a>` : '';
-  return `<article class="card">
-    <div class="card-top">
-      <span class="card-name">${esc(i.nome)}</span>
-      <span class="cat" style="background:${cc[0]};color:${cc[1]};">${esc(i.cat)}</span>
-    </div>
-    <div class="price">${preco}</div>
-    <div class="parc">${parc}</div>
-    ${link}
-  </article>`;
-}
-
-function renderDone(){
-  document.getElementById('done').innerHTML = JA_TEM.map(n=>`<span class="done-pill">${esc(n)}</span>`).join('');
-}
-
-function renderPix(){
-  const box = document.getElementById('pixbox');
-  let html = '';
-  if(PIX){
-    html += `<div class="pixkey"><span class="ms" style="font-size:20px">pix</span><span id="pixval">${esc(PIX)}</span>
-      <button class="btn btn-red" style="padding:9px 16px;font-size:13px;" onclick="copyPix()"><span class="ms" style="font-size:17px">content_copy</span> Copiar</button></div>
-      <div id="copied" style="font-size:13px;color:#93d088;margin-top:12px;height:18px;"></div>`;
-  }
-  if(WHATSAPP){
-    html += `<div style="margin-top:${PIX?'6':'0'}px;"><a class="btn btn-ghost" href="https://wa.me/${esc(WHATSAPP)}" target="_blank" rel="noopener"><span class="ms" style="font-size:19px">chat</span> Falar comigo no WhatsApp</a></div>`;
-  }
-  if(!PIX && !WHATSAPP){
-    html = `<div class="pixkey" style="border-style:solid;">Me chama no particular que a gente combina 😉</div>`;
-  }
-  box.innerHTML = html;
-}
-
-function copyPix(){
-  navigator.clipboard.writeText(PIX).then(()=>{
-    document.getElementById('copied').textContent = 'Chave copiada! Obrigado de verdade 💛';
-    setTimeout(()=>{ const e=document.getElementById('copied'); if(e) e.textContent=''; }, 3000);
-  }).catch(()=>{
-    document.getElementById('copied').textContent = 'Copia manualmente aí: ' + PIX;
-  });
-}
-
-renderChips(); renderTiers(); renderDone(); renderPix();
-</script>
+<script src="app.js"></script>
 </body>
 </html>
