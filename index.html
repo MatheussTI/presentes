@@ -138,19 +138,53 @@ const WHATSAPP = '';   // ex.: '5527999999999' (só números, com DDI 55). Vazio
    parcela/qtd: opcional, só pra mostrar "R$ x × n"
    =================================================================== */
 const ITENS = [
-  {nome:'Geladeira',        cat:'Cozinha',        valor:2640,    parcela:220,   qtd:12, link:'https://www.amazon.com.br'},
-  {nome:'Cama de Casal',    cat:'Quarto e Sala',  valor:1700,    parcela:null,  qtd:1,  link:''},
-  {nome:'Guarda-Roupas',    cat:'Quarto e Sala',  valor:1061.52, parcela:88.46, qtd:12, link:'https://www.mercadolivre.com.br'},
-  {nome:'Fogão',            cat:'Cozinha',        valor:749,     parcela:null,  qtd:1,  link:'https://a.co/d/0478tlLY'},
-  {nome:'Sofá',             cat:'Quarto e Sala',  valor:null,    parcela:null,  qtd:1,  link:'https://www.madeiramadeira.com.br'},
-  {nome:'Rack',             cat:'Quarto e Sala',  valor:null,    parcela:null,  qtd:1,  link:'https://shopee.com.br'},
-  {nome:'Jogo de Panela',   cat:'Cozinha',        valor:320.16,  parcela:26.68, qtd:12, link:'https://shopee.com.br'},
-  {nome:'Potes herméticos', cat:'Cozinha',        valor:89.9,    parcela:null,  qtd:1,  link:'https://shopee.com.br'},
-  {nome:'Jogo de Talheres', cat:'Cozinha',        valor:null,    parcela:null,  qtd:1,  link:''},
-  {nome:'Itens de Cozinha', cat:'Cozinha',        valor:null,    parcela:null,  qtd:1,  link:''},
+  /* ---------- Cozinha ---------- */
+  {nome:'Air Fryer',                cat:'Cozinha',         valor:null,    parcela:null,   qtd:1,  link:''},
+  {nome:'Jogo de Panelas',          cat:'Cozinha',         valor:null,    parcela:null,   qtd:1,  link:''},
+  {nome:'Jogo de Pratos',           cat:'Cozinha',         valor:null,    parcela:null,   qtd:1,  link:''},
+  {nome:'Jogo de Talheres',         cat:'Cozinha',         valor:null,    parcela:null,   qtd:1,  link:''},
+  {nome:'Potes herméticos',         cat:'Cozinha',         valor:89.90,   parcela:null,   qtd:1,  link:''},
+  {nome:'Tábua de Carne',           cat:'Cozinha',         valor:null,    parcela:null,   qtd:1,  link:''},
+  {nome:'Peneira',                  cat:'Cozinha',         valor:null,    parcela:null,   qtd:1,  link:''},
+  {nome:'Jarras',                   cat:'Cozinha',         valor:null,    parcela:null,   qtd:1,  link:''},
+  {nome:'Pano de Prato',            cat:'Cozinha',         valor:null,    parcela:null,   qtd:1,  link:''},
+  {nome:'Lixeira',                  cat:'Cozinha',         valor:null,    parcela:null,   qtd:1,  link:''},
+  {nome:'Tapete',                   cat:'Cozinha',         valor:null,    parcela:null,   qtd:1,  link:''},
+  {nome:'Itens de Cozinha',         cat:'Cozinha',         valor:null,    parcela:null,   qtd:1,  link:''},
+
+  /* ---------- Quarto e Sala ---------- */
+  {nome:'Cortina',                  cat:'Quarto e Sala',   valor:null,    parcela:null,   qtd:1,  link:''},
+  {nome:'Lençóis e Colchas de Cama',cat:'Quarto e Sala',   valor:null,    parcela:null,   qtd:1,  link:''},
+  {nome:'Fronha',                   cat:'Quarto e Sala',   valor:null,    parcela:null,   qtd:1,  link:''},
+  {nome:'Travesseiro',              cat:'Quarto e Sala',   valor:null,    parcela:null,   qtd:1,  link:''},
+  {nome:'Cabide',                   cat:'Quarto e Sala',   valor:null,    parcela:null,   qtd:1,  link:''},
+  {nome:'Rack',                     cat:'Quarto e Sala',   valor:null,    parcela:null,   qtd:1,  link:'https://shopee.com.br'},
+  {nome:'Sofá',                     cat:'Quarto e Sala',   valor:null,    parcela:null,   qtd:1,  link:'https://www.madeiramadeira.com.br'},
+
+  /* ---------- Área de Serviço ---------- */
+  {nome:'Vassoura e Pá de Lixo',    cat:'Área de Serviço', valor:null,    parcela:null,   qtd:1,  link:''},
+  {nome:'Rodo',                     cat:'Área de Serviço', valor:null,    parcela:null,   qtd:1,  link:''},
+  {nome:'Pano de Chão',             cat:'Área de Serviço', valor:null,    parcela:null,   qtd:1,  link:''},
+  {nome:'Ferro de Passar Roupas',   cat:'Área de Serviço', valor:null,    parcela:null,   qtd:1,  link:''},
+  {nome:'Pregador de Roupas',       cat:'Área de Serviço', valor:null,    parcela:null,   qtd:1,  link:''},
+  {nome:'Centrífuga',               cat:'Área de Serviço', valor:null,    parcela:null,   qtd:1,  link:''},
+
+  /* ---------- Banheiro ---------- */
+  {nome:'Toalha de Banho e Rosto',  cat:'Banheiro',        valor:null,    parcela:null,   qtd:1,  link:''},
+  {nome:'Porta Sabonete',           cat:'Banheiro',        valor:null,    parcela:null,   qtd:1,  link:''},
+  {nome:'Porta Escova e Pasta',     cat:'Banheiro',        valor:null,    parcela:null,   qtd:1,  link:''},
+  {nome:'Lixeira',                  cat:'Banheiro',        valor:null,    parcela:null,   qtd:1,  link:''},
+  {nome:'Tapete',                   cat:'Banheiro',        valor:null,    parcela:null,   qtd:1,  link:''},
+
+  /* ---------- Maiores ---------- */
+  {nome:'Geladeira',                cat:'Maiores',         valor:null,    parcela:null,   qtd:1,  link:'https://www.amazon.com.br'},
+  {nome:'Fogão',                    cat:'Maiores',         valor:748.44,  parcela:62.37,  qtd:12, link:'https://a.co/d/0478tlLY'},
+  {nome:'Armário de Cozinha',       cat:'Maiores',         valor:966.80,  parcela:96.68,  qtd:10, link:'https://www.mercadolivre.com.br/armario-para-cozinha-12-portas-1-gaveta-clarice-gb/p/MLB62724058'},
+  {nome:'Guarda-Roupas',            cat:'Maiores',         valor:1103.90, parcela:110.39, qtd:10, link:'https://www.casasbahia.com.br/guarda-roupa-casal-6-portas-2-gavetas-franca-cinamomo-off-white/p/1565187788'},
+  {nome:'Cama de Casal',            cat:'Maiores',         valor:2112.60, parcela:176.05, qtd:12, link:'https://www.magazineluiza.com.br/cama-box-box-colchao-queen-umaflex-bipartida-de-molas-ensacadas-46cm-de-altura-beta/p/229987700/co/cxqq/'},
 ];
 
-const JA_TEM = ['Tanquinho','TV'];
+const JA_TEM = ['Tanquinho','TV','Jogo de Copos','Ventilador'];
 
 /* Faixas — do mais leve pro mais parrudo */
 const TIERS = [
