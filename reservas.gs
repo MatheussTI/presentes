@@ -3,12 +3,12 @@
  * Google Apps Script publicado como Web App — o "backend" que o GitHub Pages não tem.
  *
  * ┌── COMO PUBLICAR ────────────────────────────────────────────────────────┐
- * │ 1. Crie uma planilha nova em sheets.new. Renomeie a primeira aba para   │
- * │    "reservas" e ponha estes três títulos em A1, B1 e C1:                │
- * │        item_id | nome | timestamp                                       │
+ * │ 1. Crie uma planilha nova em sheets.new. Não precisa configurar nada    │
+ * │    dentro dela — a aba "reservas" e os títulos                          │
+ * │    (item_id | nome | timestamp) são criados pelo próprio script.        │
  * │                                                                          │
  * │ 2. Na planilha: Extensões → Apps Script. Apague o conteúdo do           │
- * │    Code.gs e cole este arquivo inteiro.                                 │
+ * │    Code.gs e cole este arquivo inteiro. Salve.                          │
  * │                                                                          │
  * │ 3. Implantar → Nova implantação → engrenagem → App da Web.              │
  * │        Executar como:        Eu (sua conta)                             │
@@ -20,8 +20,11 @@
  * │    verificado" → Avançado → Acessar projeto sem verificação; é seu      │
  * │    próprio script, rodando na sua conta).                               │
  * │                                                                          │
- * │ 5. Copie a URL que termina em /exec e cole em RESERVAS_URL, no topo do  │
- * │    app.js. Commit + push. Pronto.                                       │
+ * │ 5. Copie a URL do App da Web — a que termina em /exec, não /dev — e     │
+ * │    cole em RESERVAS_URL, no topo do app.js. Commit + push. Pronto.      │
+ * │                                                                          │
+ * │ Teste rápido: abra a URL /exec no navegador. Deve responder             │
+ * │ {"ok":true,"reservas":[]}. Se pedir login, o passo 3 saiu errado.       │
  * │                                                                          │
  * │ Ao editar este arquivo depois: Implantar → Gerenciar implantações →     │
  * │ lápis → Versão: Nova versão → Implantar. A URL /exec continua a mesma.  │
