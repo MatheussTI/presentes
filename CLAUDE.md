@@ -93,6 +93,10 @@ o `@import` original do `styles.css` foi removido pra não fazer duas requisiç�
 
 ## Reserva compartilhada
 
+**Está ativa** desde 04/08/2026: `RESERVAS_URL` no `app.js` aponta para o Web App publicado, e a
+planilha vive no Google Drive de uma conta pessoal do usuário (não a `@inbazz.com.br` — o Workspace
+corporativo dá conflito de conta ao abrir o editor do Apps Script).
+
 Dois conjuntos de ids, e a distinção entre eles é o que impede um visitante de desmarcar a escolha
 de outro:
 
@@ -115,9 +119,18 @@ Detalhes que não são óbvios e quebram se mexidos sem cuidado:
   Google no contexto da página; qualquer outra opção devolve 401.
 - A reserva é **otimista com rollback**: a tela marca na hora e desfaz se o POST falhar, senão a
   pessoa sai achando que reservou.
+- **Antes de desfazer, o cliente relê o servidor.** Se a mudança já está lá, foi a nossa escrita que
+  chegou e só a resposta se perdeu — desfazer nesse caso travava o item: reservado na planilha,
+  exibido como "de alguém" pra todo mundo, sem dono que pudesse liberar. Não remova essa releitura.
 - Corrida (dois reservando o mesmo item): o servidor responde `{ok:false, erro:'ocupado'}` e a
-  página desmarca só a sua, avisando quem chegou depois.
+  página desmarca só a sua, avisando quem chegou depois. O aviso assume que a mensagem do WhatsApp
+  já saiu, porque o link abre antes do POST resolver.
 - Sincroniza no load, ao voltar o foco pra aba, e a cada 45s com a aba visível.
+- **Arranque frio do Apps Script mede 20–30s** (medido: 30,5s · 22,5s · 2,4s em chamadas seguidas).
+  Enquanto `state.sync === 'carregando'`, a página mostra "Conferindo o que já foi escolhido…" —
+  sem isso o visitante vê a lista toda como livre e escolhe algo já reservado. O clique não sofre:
+  a marcação é otimista e o POST resolve em segundo plano. A checagem de `ocupado` no servidor é a
+  garantia real de consistência, não o estado da tela.
 - Ids que não existem mais em `ITENS` são descartados na leitura, senão a contagem mente.
 - Sem `RESERVAS_URL`, nada disso roda e a página funciona como antes, local.
 

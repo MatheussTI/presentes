@@ -10,7 +10,7 @@ const FONE         = '5527999888266';
 const CHAVE_PIX    = '+5527999888266';
 const PIX_LABEL    = '+55 27 99988-8266';   // como a chave aparece na tela
 const PIX_DONO     = 'Matheus S.';
-const RESERVAS_URL = '';                    // ex.: 'https://script.google.com/macros/s/AKfy.../exec'
+const RESERVAS_URL = 'https://script.google.com/macros/s/AKfycbzyBlNnQdp-yEqibM9tpomFtEwPOtcI5sDJnu0dStmKsFwjiQoJ1Uu4Cv-_gD8Oang5/exec';
 
 /* ===================================================================
    ITENS — sincronizados com a aba "Casa" do app meu-financeiro.
@@ -215,11 +215,30 @@ async function reservar(item){
       throw new Error((resp && resp.erro) || 'falhou');
     }
   } catch(e) {
-    // Rede caiu: desfaz e avisa, senão a pessoa acha que reservou e não reservou.
-    state.reservas = reservasAntes;
-    salvarMinhas(minhasAntes);
-    state.sync = 'offline';
-    state.aviso = 'Não consegui registrar no site agora. Sua mensagem no WhatsApp vale — o Matheus anota manualmente.';
+    // A escrita pode ter sido aplicada no servidor mesmo com a resposta se
+    // perdendo — o Apps Script é lento no primeiro acesso e engasga quando o
+    // GET do boot e este POST se cruzam. Então confere antes de desfazer: se o
+    // servidor já reflete a mudança, foi a nossa escrita que chegou. Desfazer
+    // aqui deixaria o item travado — reservado na planilha, exibido como "de
+    // alguém" pra todo mundo e sem dono nenhum que possa liberar.
+    let aplicou = false, remotas = null;
+    try {
+      remotas = await buscarRemoto();
+      aplicou = desmarcando
+        ? remotas.indexOf(item.id) < 0
+        : remotas.indexOf(item.id) >= 0;
+    } catch(_) {}
+
+    if (aplicou) {
+      state.reservas = Array.from(new Set(remotas.concat(state.minhas)));
+      state.sync = 'ok';
+    } else {
+      // Aí sim: não chegou. Desfaz, senão a pessoa acha que reservou e não reservou.
+      state.reservas = reservasAntes;
+      salvarMinhas(minhasAntes);
+      state.sync = 'offline';
+      state.aviso = 'Não consegui registrar no site agora. Sua mensagem no WhatsApp vale — o Matheus anota manualmente.';
+    }
   }
   render();
 }
@@ -347,6 +366,10 @@ function renderAviso(){
     box.innerHTML = `<div class="aviso" role="status">${esc(state.aviso)}</div>`;
   } else if (state.sync === 'offline') {
     box.innerHTML = `<div class="aviso" role="status">Sem conexão com a lista compartilhada — o que você marcar agora vale só neste navegador.</div>`;
+  } else if (state.sync === 'carregando') {
+    // O Apps Script tem arranque frio de 20-30s. Sem essa linha, o visitante vê
+    // a lista toda como disponível e pode escolher algo que já foi reservado.
+    box.innerHTML = `<div class="aviso aviso-suave" role="status">Conferindo o que já foi escolhido…</div>`;
   } else {
     box.innerHTML = '';
   }
