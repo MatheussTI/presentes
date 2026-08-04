@@ -113,6 +113,12 @@ function linkLoja(item){
   return 'https://lista.mercadolivre.com.br/' + encodeURIComponent(item.nome.replace(/\(.*\)/, '').trim());
 }
 
+function linkWhats(item){
+  if (!FONE) return '';
+  const texto = 'Oi Matheus! Vou ficar com "' + item.nome + '" da sua lista de casa nova. Parabéns adiantado!';
+  return 'https://wa.me/' + FONE + '?text=' + encodeURIComponent(texto);
+}
+
 const tomado = id => state.reservas.indexOf(id) >= 0;
 const minha  = id => state.minhas.indexOf(id) >= 0;
 
@@ -185,10 +191,8 @@ async function reservar(item){
   state.aviso = null;
   render();
 
-  if (!desmarcando && FONE) {
-    const texto = 'Oi Matheus! Vou ficar com "' + item.nome + '" da sua lista de casa nova. Parabéns adiantado!';
-    window.open('https://wa.me/' + FONE + '?text=' + encodeURIComponent(texto), '_blank', 'noopener');
-  }
+  // O WhatsApp não é aberto aqui: "Eu dou esse" é um <a> de verdade, e a
+  // navegação nativa do link nunca é barrada por bloqueador de pop-up.
 
   if (!RESERVAS_URL) return;
 
@@ -204,7 +208,9 @@ async function reservar(item){
       state.reservas = limpar(resp.reservas);
       salvarMinhas(minhasAntes.filter(x => x !== item.id));
       state.sync = 'ok';
-      state.aviso = 'Alguém escolheu ' + item.nome + ' antes de você. Desmarquei aqui — escolhe outro? 🙈';
+      // A mensagem do WhatsApp já saiu quando o link abriu, então o aviso tem
+      // que dizer o que fazer com ela — não só que deu ruim.
+      state.aviso = 'Alguém escolheu ' + item.nome + ' um instante antes de você. Desmarquei aqui — pode escolher outro. Se você já mandou a mensagem, só avisa o Matheus que trocou. 🙈';
     } else {
       throw new Error((resp && resp.erro) || 'falhou');
     }
@@ -271,7 +277,12 @@ function cardHTML(i){
 
   let acao;
   if (!marcado) {
-    acao = `<button type="button" class="btn-dou" data-reservar="${esc(i.id)}">Eu dou esse</button>`;
+    // <a> em vez de <button>: a navegação nativa abre o WhatsApp sem risco de
+    // bloqueio de pop-up. O data-reservar continua disparando a reserva no clique.
+    const whats = linkWhats(i);
+    acao = whats
+      ? `<a class="btn-dou" href="${esc(whats)}" target="_blank" rel="noopener" data-reservar="${esc(i.id)}">Eu dou esse</a>`
+      : `<button type="button" class="btn-dou" data-reservar="${esc(i.id)}">Eu dou esse</button>`;
   } else if (eMinha) {
     acao = `<button type="button" class="btn-dou" data-reservar="${esc(i.id)}">Desmarcar</button>`;
   } else {
@@ -360,6 +371,12 @@ function renderEstaticos(){
   $('stat-total').textContent   = ITENS.length;
   $('stat-menor').textContent   = comPreco.length ? brl(Math.min.apply(null, comPreco)) : '—';
   $('stat-comodos').textContent = new Set(ITENS.map(i => i.comodo)).size;
+
+  // Sem RESERVAS_URL esse número conta só as escolhas deste navegador. Dizer
+  // "por alguém" ali seria mentira: os outros visitantes veriam sempre zero.
+  $('stat-reservados-label').textContent = RESERVAS_URL
+    ? 'já escolhidos por alguém'
+    : 'que você escolheu aqui';
 
   if (JA_TEM.length) {
     $('jatem').innerHTML = JA_TEM.map(n => `<span class="jatem-pill">${esc(n)}</span>`).join('');
